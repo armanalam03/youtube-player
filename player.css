@@ -1,0 +1,137 @@
+*, *::before, *::after{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+}
+
+.video_container{
+    position: relative;
+    width: 90%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+    margin-inline: auto;
+    background-color: black;
+}
+
+.video_container.theatre{
+    max-width: initial;
+    width: 100%;
+    max-height: 90vh;
+}
+
+.video_container.full_screen{
+    max-height: 100vh;
+}
+
+video{
+    width: 100%;
+}
+
+.video_controls_container{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: white;
+    z-index: 100;
+    opacity: 0;
+    transition: opacity 150ms ease-in-out;
+}
+
+.video_container:hover .video_controls_container, 
+.video_container:focus-within .video_controls_container, 
+.video_container.paused .video_controls_container{
+    opacity: 1;
+}
+
+.video_controls_container .controls{
+    display: flex;
+    gap: .5rem;
+    padding: .25rem;
+    align-items: center;
+}
+
+.video_controls_container .controls button{
+    background: none;
+    padding: 0;
+    border: none;
+    color: inherit;
+    height: 30px;
+    width: 30px;
+    font-size: 1.1rem;
+    opacity: .85;
+    transition: opacity 150ms ease-in-out;
+}
+
+.video_controls_container .controls button:hover{
+    opacity: 1;
+}
+
+.video_container.paused .pause-icon{
+    display: none;
+}
+
+.video_container:not(.paused) .play-icon{
+    display: none;
+}
+
+.video_controls_container::before{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0,0,0,.75), transparent);
+    z-index: -1;
+    width: 100%;
+    aspect-ratio: 6/1;
+    pointer-events: none;
+}
+
+.video_container.theatre .tall{
+    display: none;
+}
+
+.video_container:not(.theatre) .wide{
+    display: none;
+}
+
+.video_container.full_screen .open{
+    display: none;
+}
+
+.video_container:not(.full_screen) .close{
+    display: none;
+}
+
+.volume_container{
+    display: flex;
+    align-items: center;
+}
+
+/* .volume-high-icon, .volume-low-icon, .volume-muted-icon{
+    display: none;
+} */
+
+.video_container[data-volume-leve = "high"] .volume-high-icon{
+    display: block;
+}
+.video_container[data-volume-leve = "low"] .volume-low-icon{
+    display: block;
+}
+.video_container[data-volume-leve = "muted"] .volume-muted-icon{
+    display: block;
+}
+
+.volume_slider{
+    width: 0;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: width 150ms ease-in-out, transform 150ms ease-in-out;
+}
+.volume_container:hover .volume_slider{
+    width: 50%;
+    transform: scaleX(1);
+}
